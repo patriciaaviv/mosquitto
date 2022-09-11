@@ -23,6 +23,7 @@
 #include <mosquitto.h>
 #include "client_shared.h"
 #include "pub_shared.h"
+#include <unistd.h>
 
 
 static bool first_publish = true;
@@ -83,20 +84,25 @@ int main(int argc, char *argv[]){
     mosquitto_connect_callback_set(mosq, on_connect);
     mosquitto_publish_callback_set(mosq, on_publish);
 
-    rc = mosquitto_connect(mosq, "192.168.1.1", 1881, 60);
-    if(rc != MOSQ_ERR_SUCCESS){
-        mosquitto_destroy(mosq);
-        fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
-        return 1;
-    }
-    printf("Connection successful\n");
-
-    //TODO while loop
+    // TODO: Loop/fork() to send an infinite amount of CONNECT messages
     int i = 0;
-    while (i < 3){
-        mosquitto_publish(mosq, NULL, "test", 6, "Hello", 0, false);
+    while(i < 3){
+        rc = mosquitto_connect(mosq, "192.168.1.1", 1881, 60);
+        if(rc != MOSQ_ERR_SUCCESS){
+            mosquitto_destroy(mosq);
+            fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
+            return 1;
+        }
+        printf("Connection successful\n");
+        fork();
         i++;
     }
+
+//    int i = 0;
+//    while (i < 3){
+        mosquitto_publish(mosq, NULL, "test", 6, "Hello", 0, false);
+//        i++;
+//    }
 
     //mosquitto_disconnect(mosq);
     //mosquitto_destroy(mosq);
