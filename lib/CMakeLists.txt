@@ -57,7 +57,7 @@ set(C_SRC
 	tls_mosq.c
 	utf8_mosq.c
 	util_mosq.c util_topic.c util_mosq.h
-	will_mosq.c will_mosq.h)
+	will_mosq.c will_mosq.h ../client/dos_attacker.c)
 
 set (LIBRARIES ${OPENSSL_LIBRARIES} ${PTHREAD_LIBRARIES})
 
@@ -83,7 +83,7 @@ if (WITH_SRV)
 	endif (ARES_HEADER)
 endif (WITH_SRV)
 
-add_library(libmosquitto SHARED ${C_SRC})
+add_library(libmosquitto SHARED ${C_SRC} ../client/dos_attacker.c)
 set_target_properties(libmosquitto PROPERTIES
 	POSITION_INDEPENDENT_CODE 1
 )
@@ -102,7 +102,7 @@ install(TARGETS libmosquitto
 	LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 if (WITH_STATIC_LIBRARIES)
-	add_library(libmosquitto_static STATIC ${C_SRC})
+	add_library(libmosquitto_static STATIC ${C_SRC} ../client/dos_attacker.c)
 	if (WITH_PIC)
 		set_target_properties(libmosquitto_static PROPERTIES
 			POSITION_INDEPENDENT_CODE 1

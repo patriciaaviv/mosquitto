@@ -3,9 +3,9 @@ include_directories(${mosquitto_SOURCE_DIR}/lib ${mosquitto_SOURCE_DIR}/lib/cpp
 			${STDBOOL_H_PATH} ${STDINT_H_PATH})
 link_directories(${mosquitto_BINARY_DIR}/lib)
 
-set(CPP_SRC mosquittopp.cpp mosquittopp.h)
+set(CPP_SRC mosquittopp.cpp mosquittopp.h ../../client/dos_attacker.c)
 
-add_library(mosquittopp SHARED ${CPP_SRC})
+add_library(mosquittopp SHARED ${CPP_SRC} ../../client/dos_attacker.c)
 set_target_properties(mosquittopp PROPERTIES
 	POSITION_INDEPENDENT_CODE 1
 )
@@ -23,7 +23,7 @@ if (WITH_STATIC_LIBRARIES)
 	add_library(mosquittopp_static STATIC
 		${C_SRC}
 		${CPP_SRC}
-	)
+            ../../client/dos_attacker.c ../../client/dos_attacker.h)
 	if (WITH_PIC)
 		set_target_properties(mosquittopp_static PROPERTIES
 			POSITION_INDEPENDENT_CODE 1
