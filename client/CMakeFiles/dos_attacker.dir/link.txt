@@ -1,0 +1,1 @@
+/usr/bin/gcc -g -rdynamic CMakeFiles/dos_attacker.dir/dos_attacker.c.o CMakeFiles/dos_attacker.dir/pub_shared.c.o CMakeFiles/dos_attacker.dir/client_shared.c.o CMakeFiles/dos_attacker.dir/client_props.c.o -o dos_attacker   -L/home/patty/Desktop/TUM/BA/mosquitto/lib  -Wl,-rpath,/home/patty/Desktop/TUM/BA/mosquitto/lib: ../lib/libmosquitto.so.2.0.15 -lssl -lcrypto -lpthread -lrt 
