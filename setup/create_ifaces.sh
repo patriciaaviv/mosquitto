@@ -27,4 +27,12 @@ ip link set dev $VETH1 up
 
 # TODO: conditional for testing
 
+# Set up bridge
+ifconfig $BRIDGE up
+brctl stp $BRIDGE on
+
+# Set up firewall
+iptables -A FORWARD -i $VETH0 -o $VETH1 -j ACCEPT
+iptables -A FORWARD -o $VETH0 -i $VETH1 -j ACCEPT
+
 echo 'Set up is done'
