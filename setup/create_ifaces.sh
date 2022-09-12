@@ -20,7 +20,15 @@ ip link set $VETH1 master $BRIDGE
 
 # Assign IP addresses to the new interfaces
 ip addr add 192.168.1.1/24 dev $VETH0
-ip addr add 192.168.1.2/24 dev $VETH1
+
+# Create new IP addresses on dummy1
+for VARIABLE in {2..254}
+do
+  IP_ADDR="192.168.1.$VARIABLE"
+  ip addr add "$IP_ADDR/24" dev $VETH1
+done
+#ip addr add 192.168.1.2/24 dev $VETH1
+#ip addr add 192.168.1.3/24 dev $VETH1
 
 ip link set dev $VETH0 up
 ip link set dev $VETH1 up
