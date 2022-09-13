@@ -20,44 +20,45 @@ ip link set $VETH1 master $BRIDGE
 
 # Assign IP addresses to the new interfaces
 ip addr add 192.168.1.1/24 dev $VETH0
+ip addr add 192.168.1.2/24 dev $VETH1
 
 # Create new IP addresses on dummy1
 # Create 1024 new addresses since this is the maximum number of connections to the MQTT broker
-for VARIABLE in {2..254}
-do
-  IP_ADDR_1="192.168.1.$VARIABLE"
-  ip addr add "$IP_ADDR_1/24" dev $VETH1
-done
-
-for VARIABLE in {1..254}
-do
-  IP_ADDR_2="192.168.2.$VARIABLE"
-  ip addr add "$IP_ADDR_2/24" dev $VETH1
-done
-
-for VARIABLE in {1..254}
-do
-  IP_ADDR_3="192.168.3.$VARIABLE"
-  ip addr add "$IP_ADDR_3/24" dev $VETH1
-done
-
-for VARIABLE in {1..254}
-do
-  IP_ADDR_4="192.168.4.$VARIABLE"
-  ip addr add "$IP_ADDR_4/24" dev $VETH1
-done
-
-for VARIABLE in {1..254}
-do
-  IP_ADDR_5="192.168.5.$VARIABLE"
-  ip addr add "$IP_ADDR_5/24" dev $VETH1
-done
-
-for VARIABLE in {1..9}
-do
-  IP_ADDR_6="192.168.6.$VARIABLE"
-  ip addr add "$IP_ADDR_6/24" dev $VETH1
-done
+#for VARIABLE in {2..254}
+#do
+#  IP_ADDR_1="192.168.1.$VARIABLE"
+#  ip addr add "$IP_ADDR_1/24" dev $VETH1
+#done
+#
+#for VARIABLE in {1..254}
+#do
+#  IP_ADDR_2="192.168.2.$VARIABLE"
+#  ip addr add "$IP_ADDR_2/24" dev $VETH1
+#done
+#
+#for VARIABLE in {1..254}
+#do
+#  IP_ADDR_3="192.168.3.$VARIABLE"
+#  ip addr add "$IP_ADDR_3/24" dev $VETH1
+#done
+#
+#for VARIABLE in {1..254}
+#do
+#  IP_ADDR_4="192.168.4.$VARIABLE"
+#  ip addr add "$IP_ADDR_4/24" dev $VETH1
+#done
+#
+#for VARIABLE in {1..254}
+#do
+#  IP_ADDR_5="192.168.5.$VARIABLE"
+#  ip addr add "$IP_ADDR_5/24" dev $VETH1
+#done
+#
+#for VARIABLE in {1..9}
+#do
+#  IP_ADDR_6="192.168.6.$VARIABLE"
+#  ip addr add "$IP_ADDR_6/24" dev $VETH1
+#done
 
 ip link set dev $VETH0 up
 ip link set dev $VETH1 up
