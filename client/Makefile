@@ -213,20 +213,6 @@ mosquitto_rr/fast:
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/build
 .PHONY : mosquitto_rr/fast
 
-# Convenience name for target.
-client/CMakeFiles/dos_attacker.dir/rule:
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 client/CMakeFiles/dos_attacker.dir/rule
-.PHONY : client/CMakeFiles/dos_attacker.dir/rule
-
-# Convenience name for target.
-dos_attacker: client/CMakeFiles/dos_attacker.dir/rule
-.PHONY : dos_attacker
-
-# fast build rule for target.
-dos_attacker/fast:
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/build
-.PHONY : dos_attacker/fast
-
 client_props.o: client_props.c.o
 .PHONY : client_props.o
 
@@ -235,7 +221,6 @@ client_props.c.o:
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/client_props.c.o
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_sub.dir/build.make client/CMakeFiles/mosquitto_sub.dir/client_props.c.o
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/client_props.c.o
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/client_props.c.o
 .PHONY : client_props.c.o
 
 client_props.i: client_props.c.i
@@ -246,7 +231,6 @@ client_props.c.i:
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/client_props.c.i
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_sub.dir/build.make client/CMakeFiles/mosquitto_sub.dir/client_props.c.i
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/client_props.c.i
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/client_props.c.i
 .PHONY : client_props.c.i
 
 client_props.s: client_props.c.s
@@ -257,7 +241,6 @@ client_props.c.s:
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/client_props.c.s
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_sub.dir/build.make client/CMakeFiles/mosquitto_sub.dir/client_props.c.s
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/client_props.c.s
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/client_props.c.s
 .PHONY : client_props.c.s
 
 client_shared.o: client_shared.c.o
@@ -268,7 +251,6 @@ client_shared.c.o:
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/client_shared.c.o
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_sub.dir/build.make client/CMakeFiles/mosquitto_sub.dir/client_shared.c.o
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/client_shared.c.o
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/client_shared.c.o
 .PHONY : client_shared.c.o
 
 client_shared.i: client_shared.c.i
@@ -279,7 +261,6 @@ client_shared.c.i:
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/client_shared.c.i
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_sub.dir/build.make client/CMakeFiles/mosquitto_sub.dir/client_shared.c.i
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/client_shared.c.i
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/client_shared.c.i
 .PHONY : client_shared.c.i
 
 client_shared.s: client_shared.c.s
@@ -290,41 +271,7 @@ client_shared.c.s:
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/client_shared.c.s
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_sub.dir/build.make client/CMakeFiles/mosquitto_sub.dir/client_shared.c.s
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/client_shared.c.s
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/client_shared.c.s
 .PHONY : client_shared.c.s
-
-dos_attacker.o: dos_attacker.c.o
-.PHONY : dos_attacker.o
-
-# target to build an object file
-dos_attacker.c.o:
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/dos_attacker.c.o
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_sub.dir/build.make client/CMakeFiles/mosquitto_sub.dir/dos_attacker.c.o
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/dos_attacker.c.o
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/dos_attacker.c.o
-.PHONY : dos_attacker.c.o
-
-dos_attacker.i: dos_attacker.c.i
-.PHONY : dos_attacker.i
-
-# target to preprocess a source file
-dos_attacker.c.i:
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/dos_attacker.c.i
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_sub.dir/build.make client/CMakeFiles/mosquitto_sub.dir/dos_attacker.c.i
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/dos_attacker.c.i
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/dos_attacker.c.i
-.PHONY : dos_attacker.c.i
-
-dos_attacker.s: dos_attacker.c.s
-.PHONY : dos_attacker.s
-
-# target to generate assembly for a file
-dos_attacker.c.s:
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/dos_attacker.c.s
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_sub.dir/build.make client/CMakeFiles/mosquitto_sub.dir/dos_attacker.c.s
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/dos_attacker.c.s
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/dos_attacker.c.s
-.PHONY : dos_attacker.c.s
 
 pub_client.o: pub_client.c.o
 .PHONY : pub_client.o
@@ -357,7 +304,6 @@ pub_shared.o: pub_shared.c.o
 pub_shared.c.o:
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/pub_shared.c.o
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/pub_shared.c.o
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/pub_shared.c.o
 .PHONY : pub_shared.c.o
 
 pub_shared.i: pub_shared.c.i
@@ -367,7 +313,6 @@ pub_shared.i: pub_shared.c.i
 pub_shared.c.i:
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/pub_shared.c.i
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/pub_shared.c.i
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/pub_shared.c.i
 .PHONY : pub_shared.c.i
 
 pub_shared.s: pub_shared.c.s
@@ -377,7 +322,6 @@ pub_shared.s: pub_shared.c.s
 pub_shared.c.s:
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_pub.dir/build.make client/CMakeFiles/mosquitto_pub.dir/pub_shared.c.s
 	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/mosquitto_rr.dir/build.make client/CMakeFiles/mosquitto_rr.dir/pub_shared.c.s
-	cd /home/patty/Desktop/TUM/BA/mosquitto && $(MAKE) $(MAKESILENT) -f client/CMakeFiles/dos_attacker.dir/build.make client/CMakeFiles/dos_attacker.dir/pub_shared.c.s
 .PHONY : pub_shared.c.s
 
 rr_client.o: rr_client.c.o
@@ -468,7 +412,6 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... dos_attacker"
 	@echo "... mosquitto_pub"
 	@echo "... mosquitto_rr"
 	@echo "... mosquitto_sub"
@@ -478,9 +421,6 @@ help:
 	@echo "... client_shared.o"
 	@echo "... client_shared.i"
 	@echo "... client_shared.s"
-	@echo "... dos_attacker.o"
-	@echo "... dos_attacker.i"
-	@echo "... dos_attacker.s"
 	@echo "... pub_client.o"
 	@echo "... pub_client.i"
 	@echo "... pub_client.s"

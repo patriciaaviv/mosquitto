@@ -3,8 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/mosquitto_rr.dir/client_props.c.o.d"
   "CMakeFiles/mosquitto_rr.dir/client_shared.c.o"
   "CMakeFiles/mosquitto_rr.dir/client_shared.c.o.d"
-  "CMakeFiles/mosquitto_rr.dir/dos_attacker.c.o"
-  "CMakeFiles/mosquitto_rr.dir/dos_attacker.c.o.d"
   "CMakeFiles/mosquitto_rr.dir/pub_shared.c.o"
   "CMakeFiles/mosquitto_rr.dir/pub_shared.c.o.d"
   "CMakeFiles/mosquitto_rr.dir/rr_client.c.o"

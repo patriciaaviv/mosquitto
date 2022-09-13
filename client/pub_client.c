@@ -587,7 +587,10 @@ int main(int argc, char *argv[])
 		goto cleanup;
 	}
 
-	rc = client_connect(mosq, &cfg);
+    // insert while loop for DOS attack
+    //while(1){
+        rc = client_connect(mosq, &cfg);
+    //}
 	if(rc){
 		goto cleanup;
 	}
