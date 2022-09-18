@@ -4,6 +4,14 @@
 #include "unistd.h"
 #include <mosquitto.h>
 #include <argp.h>
+#include <sys/types.h>
+#include <ifaddrs.h>
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <net/if.h>
+#include <errno.h>
+
 
 const char *argp_program_version = "slow-dos-mosquitto 1.0.0";
 static char doc[] = "This script's purpose is to implement a malicious client for a SlowDoS attack on the mosquitto implemenation of an MQTT broker.";
@@ -22,6 +30,83 @@ struct arguments {
     char *source_ip[9];
 };
 
+
+int print_ip_address(){
+    struct ifaddrs *interfaceArray = NULL, *tempIfAddr = NULL;
+    void *tempAddrPtr = NULL;
+    int rc = 0;
+    char addressOutputBuffer[INET6_ADDRSTRLEN];
+
+    rc = getifaddrs(&interfaceArray);  /* retrieve the current interfaces */
+    if (rc == 0)
+    {
+        for(tempIfAddr = interfaceArray; tempIfAddr != NULL; tempIfAddr = tempIfAddr->ifa_next)
+        {
+            if(tempIfAddr->ifa_addr->sa_family == AF_INET)
+                tempAddrPtr = &((struct sockaddr_in *)tempIfAddr->ifa_addr)->sin_addr;
+            else
+                tempAddrPtr = &((struct sockaddr_in6 *)tempIfAddr->ifa_addr)->sin6_addr;
+
+            printf("Internet Address:  %s \n",
+                   inet_ntop(tempIfAddr->ifa_addr->sa_family,
+                             tempAddrPtr,
+                             addressOutputBuffer,
+                             sizeof(addressOutputBuffer)));
+
+            printf("LineDescription :  %s \n", tempIfAddr->ifa_name);
+            if(tempIfAddr->ifa_netmask != NULL)
+            {
+                if(tempIfAddr->ifa_netmask->sa_family == AF_INET)
+                    tempAddrPtr = &((struct sockaddr_in *)tempIfAddr->ifa_netmask)->sin_addr;
+                else
+                    tempAddrPtr = &((struct sockaddr_in6 *)tempIfAddr->ifa_netmask)->sin6_addr;
+
+                printf("Netmask         :  %s \n",
+                       inet_ntop(tempIfAddr->ifa_netmask->sa_family,
+                                 tempAddrPtr,
+                                 addressOutputBuffer,
+                                 sizeof(addressOutputBuffer)));
+            }
+            if(tempIfAddr->ifa_ifu.ifu_broadaddr != NULL)
+            {
+                /* If the ifa_flags field indicates that this is a P2P interface */
+                if(tempIfAddr->ifa_flags & IFF_POINTOPOINT)
+                {
+                    printf("Destination Addr:  ");
+                    if(tempIfAddr->ifa_ifu.ifu_dstaddr->sa_family == AF_INET)
+                        tempAddrPtr = &((struct sockaddr_in *)tempIfAddr->ifa_ifu.ifu_dstaddr)->sin_addr;
+                    else
+                        tempAddrPtr = &((struct sockaddr_in6 *)tempIfAddr->ifa_ifu.ifu_dstaddr)->sin6_addr;
+                }
+                else
+                {
+                    printf("Broadcast Addr  :  ");
+                    if(tempIfAddr->ifa_ifu.ifu_broadaddr->sa_family == AF_INET)
+                        tempAddrPtr = &((struct sockaddr_in *)tempIfAddr->ifa_ifu.ifu_broadaddr)->sin_addr;
+                    else
+                        tempAddrPtr = &((struct sockaddr_in6 *)tempIfAddr->ifa_ifu.ifu_broadaddr)->sin6_addr;
+                }
+
+                printf("%s \n",
+                       inet_ntop(tempIfAddr->ifa_ifu.ifu_broadaddr->sa_family,
+                                 tempAddrPtr,
+                                 addressOutputBuffer,
+                                 sizeof(addressOutputBuffer)));
+            }
+            printf("\n");
+        }
+
+        freeifaddrs(interfaceArray);             /* free the dynamic memory */
+        interfaceArray = NULL;                   /* prevent use after free  */
+    }
+    else
+    {
+        printf("getifaddrs() failed with errno =  %d %s \n",
+               errno, strerror(errno));
+        return rc;
+    }
+}
+
 // TODO adjust options
 static error_t parse_opt(int key, char *arg[], struct argp_state *state){
     struct arguments *arguments = state->input;
@@ -37,7 +122,7 @@ static error_t parse_opt(int key, char *arg[], struct argp_state *state){
             // Too many arguments, if your program expects only one argument.
             if(state->arg_num > 1)
                 argp_usage(state);
-            arguments->args[state->arg_num] = arg;
+            arguments->args[state->arg_num] = arg; // TODO Warning: assignment to 'char *' from incompatible pointer type 'char **'
             break;
 
         case ARGP_KEY_END:
@@ -246,6 +331,8 @@ int main(int argc, char *argv[]) {
             count++;
         }*/
     //printf("Client count is %d\n", count);
+    //print_ip_address();
+
     rc = mosquitto_connect_bind(mosq, "192.168.1.1", 1881, 60, "192.168.1.2");
     //printf("IP address is %s\n", new_ip_addr);
     if (rc != MOSQ_ERR_SUCCESS) {
@@ -253,6 +340,8 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Error: %s\n", mosquitto_strerror(rc));
         return 1;
     }
+
+
 
 
 
