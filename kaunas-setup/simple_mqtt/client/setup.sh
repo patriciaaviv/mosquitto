@@ -10,13 +10,13 @@ echo "hostname is $hn according to pos"
 # clone git repo
 repository="git@github.com:patriciaaviv/mosquitto.git"
 # which folder is mine on the test node?
-localFolder="/Users/horvathp/"
+mkdir mqtt
+localFolder="/root/mqtt/"
 git clone "$repository" "$localFolder"
 
 # compile the files
-make ~/horvathp/mosquitto
-
-
+cd /root/mqtt/mosquitto
+make
 
 echo "setup of client node completed"
 
