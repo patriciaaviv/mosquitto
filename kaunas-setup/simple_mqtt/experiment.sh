@@ -41,13 +41,13 @@ pos commands launch --infile node1/setup.sh --queued --name setup $NODE1
 pos commands launch --infile node2/setup.sh --queued --name setup $NODE2
 
 # TODO: execute experiment on nodes
-#pos commands launch --infile node1/measurement.sh --queued --loop --name measurement $NODE1
+pos commands launch --infile node1/run_mqtt_server.sh --queued --loop --name run_mqtt_server $NODE1
 # as all nodes sync at start and end of measurement scripts, launching the
 # loop for the last node in blocking mode accurately displays the current
 # progress
-#pos commands launch --infile node2/measurement.sh --blocking --loop --name measurement $NODE2
+pos commands launch --infile node2/run_mqtt_sub.sh --blocking --loop --name run_mqtt_sub $NODE2
 
 # free nodes
-pos allocations free $NODE1
+#pos allocations free $NODE1
 
 
