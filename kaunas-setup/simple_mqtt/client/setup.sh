@@ -7,6 +7,9 @@ a_local_variable=$(pos_get_variable a/local/variable)
 echo "Setting up node2..."
 echo "hostname is $hn according to pos"
 
+apt-get install tshark
+apt-get install nftables
+
 # clone git repo
 repository="git@github.com:patriciaaviv/mosquitto.git"
 # which folder is mine on the test node?
@@ -16,8 +19,10 @@ git clone "$repository" "$localFolder"
 
 # compile the files
 cd /root/mqtt/mosquitto
-make
+make clean
 
 echo "setup of client node completed"
+
+
 
 ## add iptables rule here?
